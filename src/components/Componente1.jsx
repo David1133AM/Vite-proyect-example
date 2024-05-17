@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Componente1 = ({valor,text,color,icono}) => {
+const Componente1 = ({valor,text,color,icono,descripcion  }) => {
   return (
     <>
       <div className={`small-box ${color}`}>
@@ -11,7 +11,7 @@ const Componente1 = ({valor,text,color,icono}) => {
         <div className='icon'>
           <i className={icono}></i>
         </div>
-        <a href="#" className='small-box-footer '>More info <i className='fas fa-arrow-circle-right'></i></a>
+        <a href="#" className='small-box-footer '>{descripcion}</a>
       </div>
     </>
     
