@@ -20,11 +20,11 @@ const AirQualityScreen = () => {
   const [wg, setWg] = useState(0);
   const [time, settime] = useState('2024-05-17 00:00:00');
   const [scale, setScale] = useState(['primary','desconocida','por determinar'])
-
-  const getAQI = async () => {
+  document.getElementById("Busqueda")
+  const getAQI = async (city) => {
     const token = 'a76f9558ad9b42afb92be9f0aa5c723b2ce939bf'
 
-    const url = `https://api.waqi.info/feed/here/?token=${token}`;
+    const url = `https://api.waqi.info/feed/${city}/?token=${token}`;
     const response = await fetch(url);
     const data=  await response.json()
     console.log(data);
@@ -75,10 +75,25 @@ const AirQualityScreen = () => {
     return [color,nivel,mensaje]
   }
   useEffect(() =>{
-    getAQI();
+    getAQI(city);
   },[])
   return (
     <>
+    <div className='row'>
+        <div className='col-12'>
+          <div className='card card-primary'>
+            <div className='card-body'>
+              <div className='form-group'>
+                <label>Buscar</label>
+                <input type='text' className='form-control' placeholder='Ciudad, Estacion o Pais' value={city} onChange={e => setCity(e.target.value)}/> 
+              </div>
+            </div>
+            <div className='card-footer text-center'>
+              <button className='btn bg-purple btn-lg' onClick={() => getAQI(city)}>Aceptar</button>
+            </div>
+          </div>
+        </div>
+    </div>
     <div> <a href={source.url} target='_blank' title='Ir al sitio'>{source.name}</a></div>
     <div className='card card-info'>
         <div className='card-header'>
