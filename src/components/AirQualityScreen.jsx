@@ -164,6 +164,9 @@ const AirQualityScreen = () => {
             <div className='col-lg-4 col-md-6 col-xs-12'>
                 <Componente1 valor={9} text="CO" icono="far fa-surprise" color="bg-orange" />                
             </div>
+            <div className='col-lg-4 col-md-6 col-xs-12'>
+                <Componente1 />                
+            </div>
           </div>
         </div>
         <div className='card-footer'>

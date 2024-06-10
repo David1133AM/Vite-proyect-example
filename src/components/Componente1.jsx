@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Componente1 = ({valor,text,color,icono,descripcion  }) => {
   return (
@@ -19,3 +20,17 @@ const Componente1 = ({valor,text,color,icono,descripcion  }) => {
 }
 
 export default Componente1
+Componente1.propTypes ={
+  valor : PropTypes.string.isRequired,
+  text: PropTypes.string,
+  color: PropTypes.string.isRequired,
+  icono: PropTypes.string,
+  descripcion: PropTypes.string
+}
+Componente1.defaultProps ={
+  valor: "0%",
+  text: "Nombre del atributo",
+  color: "bg-olive",
+  icono: "far fa-paper-plane",
+  descripcion : "Sin descripcion"
+}
