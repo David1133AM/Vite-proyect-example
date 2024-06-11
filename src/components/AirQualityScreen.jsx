@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Componente1 from './Componente1';
+import LineChart from '../echarts/LineChart';
 
 const AirQualityScreen = () => {
   const [city,setCity] = useState('Puebla');
@@ -26,6 +27,9 @@ const AirQualityScreen = () => {
   const [humedad, setHumedad] = useState(0);
   const [presion, setPresion] = useState(0);
   const [descripcion, setDescripcion] = useState('');
+  //Api prediccion de 5 dias
+  const [temps, setTemps] = useState([]);
+  const [dates, setDates] = useState([]);
 
   const token = 'a76f9558ad9b42afb92be9f0aa5c723b2ce939bf'
   const apiKey='a8c927055c88d19616afb18ae71a1226'
@@ -40,6 +44,24 @@ const AirQualityScreen = () => {
     setPresion(data.main.pressure);
     setDescripcion(data.weather[0].description);
 
+  }
+
+  const getWeatherForeast = async (lat, lon) =>{
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log("Predccion del clima en los siguientes 5 dias", data)
+    const lista = data.list;
+    let temperatura = []
+    let fechas = []
+    lista.forEach(objeto => {
+      temperatura.push(objeto.main.temp)
+      fechas.push(objeto.dt_txt)
+    });
+    //console.log(temperatura)
+    //console.log(fechas)
+    setTemps(temperatura)
+    setDates(fechas)
   }
 
   const getAQI = async (city) => {
@@ -104,6 +126,7 @@ const AirQualityScreen = () => {
   useEffect(() =>{
     getAQI(city);
     getWeather(latitud,longitud)
+    getWeatherForeast(latitud,longitud)
   },[])
   return (
     <>
@@ -166,6 +189,11 @@ const AirQualityScreen = () => {
             </div>
             <div className='col-lg-4 col-md-6 col-xs-12'>
                 <Componente1 />                
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-12'>
+              <LineChart temperaturas={temps} fechas={dates} titulo={"Prediccion del Clima los proximos 5 dias"}/>
             </div>
           </div>
         </div>
